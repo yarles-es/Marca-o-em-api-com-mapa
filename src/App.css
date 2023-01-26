@@ -1,0 +1,11 @@
+.map-square {
+  width: 600px;
+  height: 600px;
+}
+.map {
+  margin: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

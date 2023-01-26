@@ -25,7 +25,6 @@ function App() {
       setInputState({ [value]: target.checked });
     }
     if (name === "inputLatLong") setInputLatLong(value);
-
   };
 
   const applyButton = () => {
@@ -35,8 +34,13 @@ function App() {
       return alert("é nescessario que escolha Offline ou Online");
     if (!inputLatLong) return alert("coordenadas não podem ficar vazias");
     const arrayLongLat = inputLatLong.split(",");
-    if(arrayLongLat.length !== 2)
-      return alert('Coordenadas digitadas de maneira incorreta');
+    if (
+      arrayLongLat.length !== 2 ||
+      isNaN(Number(arrayLongLat[0])) ||
+      isNaN(Number(arrayLongLat[1]))
+    ) {
+      return alert("Coordenadas digitadas de maneira incorreta");
+    }
     setNewPositions([
       ...newPositions,
       { ...inputStatus, geo: [...arrayLongLat] },

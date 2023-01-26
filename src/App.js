@@ -36,8 +36,8 @@ function App() {
     const arrayLongLat = inputLatLong.split(",");
     if (
       arrayLongLat.length !== 2 ||
-      isNaN(Number(arrayLongLat[0])) ||
-      isNaN(Number(arrayLongLat[1]))
+      Number.isNaN(Number(arrayLongLat[0])) ||
+      Number.isNaN(Number(arrayLongLat[1]))
     ) {
       return alert("Coordenadas digitadas de maneira incorreta");
     }

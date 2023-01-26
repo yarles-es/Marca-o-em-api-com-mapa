@@ -9,6 +9,7 @@ function App() {
   const [newPositions, setNewPositions] = useState([]);
   const [inputLat, setInputLat] = useState("");
   const [inputLong, setInputLong] = useState("");
+  const [linkgeo, setLinkgeo] = useState(null);
   const [inputStatus, setInputState] = useState({
     offline: false,
     online: false,
@@ -19,6 +20,18 @@ function App() {
       setPosition([position.coords.latitude, position.coords.longitude]);
     });
   }, []);
+  const getNumbersGeo = (value) => {
+    const regex = new RegExp(/(-?\d{1,2}\.\d+)[^\d-]+(-?\d{1,2}\.\d+)/);
+    const latAndLong = regex.exec(value);
+    if(latAndLong) {
+      setNewPositions([
+        ...newPositions,
+        { ...inputStatus, geo: [latAndLong[1], latAndLong[2]] },
+      ]);
+    } else {
+      alert('Não foi possivel decodificar o link');
+    }
+  }
 
   const inputChange = ({ target }) => {
     const { name, value } = target;
@@ -27,9 +40,11 @@ function App() {
     }
     if (name === "inputLat") setInputLat(value);
     if (name === "inputLong") setInputLong(value);
+    if (name === "link") setLinkgeo(value);
   };
 
   const applyButton = () => {
+    if (linkgeo) return getNumbersGeo(linkgeo);
     if (!inputStatus.offline && !inputStatus.online && (!inputLat || inputLong))
       return alert("É nescessario que todos os dados estejam preenchidos");
     if (!inputStatus.offline && !inputStatus.online)
@@ -57,6 +72,12 @@ function App() {
         type="text"
         placeholder="Longitude"
         name="inputLong"
+        onChange={inputChange}
+      />
+      <input
+        type="text"
+        placeholder="link inteiro da geocalização"
+        name="link"
         onChange={inputChange}
       />
       <form>

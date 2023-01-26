@@ -7,9 +7,7 @@ import "./App.css";
 function App() {
   const [position, setPosition] = useState(null);
   const [newPositions, setNewPositions] = useState([]);
-  const [inputLat, setInputLat] = useState("");
-  const [inputLong, setInputLong] = useState("");
-  const [linkgeo, setLinkgeo] = useState(null);
+  const [inputLatLong, setInputLatLong] = useState("");
   const [inputStatus, setInputState] = useState({
     offline: false,
     online: false,
@@ -20,66 +18,38 @@ function App() {
       setPosition([position.coords.latitude, position.coords.longitude]);
     });
   }, []);
-  const getNumbersGeo = (value) => {
-    const regex = new RegExp(/(-?\d{1,2}\.\d+)[^\d-]+(-?\d{1,2}\.\d+)/);
-    const latAndLong = regex.exec(value);
-    if(latAndLong) {
-      const longCurrent = Number(latAndLong[2]) - -0.0021887;
-      setNewPositions([
-        ...newPositions,
-        { ...inputStatus, geo: [latAndLong[1], String(longCurrent)] },
-      ]);
-    } else {
-      alert('Não foi possivel decodificar o link');
-    }
-  }
 
   const inputChange = ({ target }) => {
     const { name, value } = target;
     if (name === "state") {
       setInputState({ [value]: target.checked });
     }
-    if (name === "inputLat") setInputLat(value);
-    if (name === "inputLong") setInputLong(value);
-    if (name === "link") setLinkgeo(value);
+    if (name === "inputLatLong") setInputLatLong(value);
+
   };
 
   const applyButton = () => {
-    if (linkgeo) return getNumbersGeo(linkgeo);
-    if (!inputStatus.offline && !inputStatus.online && (!inputLat || inputLong))
+    if (!inputStatus.offline && !inputStatus.online && !inputLatLong)
       return alert("É nescessario que todos os dados estejam preenchidos");
     if (!inputStatus.offline && !inputStatus.online)
       return alert("é nescessario que escolha Offline ou Online");
-    if (!inputLat || !inputLong)
-      return alert("coordenadas não podem ficar vazias");
+    if (!inputLatLong) return alert("coordenadas não podem ficar vazias");
+    const arrayLongLat = inputLatLong.split(", ");
+    console.log(arrayLongLat);
     setNewPositions([
       ...newPositions,
-      { ...inputStatus, geo: [inputLat, inputLong] },
+      { ...inputStatus, geo: [...arrayLongLat] },
     ]);
-    setInputLat("");
-    setInputLong("");
+    setInputLatLong("");
     setInputState({ offline: false, online: false });
   };
 
   return (
     <div className="map">
-      {console.log(newPositions)}
       <input
         type="text"
-        placeholder="Latitude"
-        name="inputLat"
-        onChange={inputChange}
-      />
-      <input
-        type="text"
-        placeholder="Longitude"
-        name="inputLong"
-        onChange={inputChange}
-      />
-      <input
-        type="text"
-        placeholder="link inteiro da geocalização"
-        name="link"
+        placeholder="Longitude , latitude"
+        name="inputLatLong"
         onChange={inputChange}
       />
       <form>
@@ -131,6 +101,5 @@ function App() {
 }
 
 export default App;
-
 
 // -41.0589677, -41.056779 -0.0021887

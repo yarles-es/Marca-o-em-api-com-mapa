@@ -18,7 +18,7 @@ function LocationMarker({ Marker, Popup, newPositions, icon }) {
       position={position.geo}
       icon={position.online ? iconVerde : iconVermelho}
     >
-      <Popup>You are here</Popup>
+      <Popup>nome</Popup>
     </Marker>
   ));
   return markers;

@@ -65,6 +65,7 @@ function App() {
           value={inputLatLong}
         />
       </InputGroup>
+      <p><strong>Exemplo:</strong> -19.899103,-41.056704</p>
       <form>
         <div className="checkBox-On-Off">
           <Form.Check

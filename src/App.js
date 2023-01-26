@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { icon } from "leaflet";
 import LocationMarker from "./components/LocationMarker";
+import { Button, InputGroup, Form } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 function App() {
@@ -21,6 +23,7 @@ function App() {
 
   const inputChange = ({ target }) => {
     const { name, value } = target;
+    console.log(target);
     if (name === "state") {
       setInputState({ [value]: target.checked });
     }
@@ -51,37 +54,42 @@ function App() {
 
   return (
     <div className="map">
-      <input
-        type="text"
-        placeholder="Longitude , latitude"
-        name="inputLatLong"
-        onChange={inputChange}
-      />
+      <InputGroup className="mb-3 input-geo ">
+        <Form.Control
+          className="text-center"
+          name="inputLatLong"
+          onChange={inputChange}
+          placeholder="Longitude - Latitude"
+          aria-label="Longitude - Latitude"
+          aria-describedby="basic-addon1"
+          value={inputLatLong}
+        />
+      </InputGroup>
       <form>
-        <label htmlFor="off">
-          <input
-            checked={inputStatus.offline}
+        <div className="checkBox-On-Off">
+          <Form.Check
             onChange={inputChange}
+            name="state"
             type="radio"
             id="off"
-            name="state"
+            label={"Offline"}
             value="offline"
+            checked={inputStatus.offline}
           />
-          Offline
-        </label>
-        <label htmlFor="on">
-          <input
-            checked={inputStatus.online}
+          <Form.Check
             onChange={inputChange}
+            name="state"
             type="radio"
             id="on"
-            name="state"
+            label={"Online"}
             value="online"
+            checked={inputStatus.online}
           />
-          Online
-        </label>
+        </div>
       </form>
-      <button onClick={applyButton}>Criar Ponto</button>
+      <Button variant="primary" onClick={applyButton} className="buttonPoint">
+        Criar ponto
+      </Button>
       {position && (
         <MapContainer
           center={position}
@@ -106,5 +114,3 @@ function App() {
 }
 
 export default App;
-
-// -41.0589677, -41.056779 -0.0021887

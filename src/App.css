@@ -1,11 +1,25 @@
 .map-square {
-  width: 600px;
-  height: 600px;
+  width: 500px;
+  height: 500px;
 }
 .map {
-  margin: 100px;
+  margin: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.input-geo {
+  width: 500px;
+}
+
+.checkBox-On-Off {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.buttonPoint {
+  margin: 10px;
 }

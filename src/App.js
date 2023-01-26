@@ -24,9 +24,10 @@ function App() {
     const regex = new RegExp(/(-?\d{1,2}\.\d+)[^\d-]+(-?\d{1,2}\.\d+)/);
     const latAndLong = regex.exec(value);
     if(latAndLong) {
+      const longCurrent = Number(latAndLong[2]) - -0.0021887;
       setNewPositions([
         ...newPositions,
-        { ...inputStatus, geo: [latAndLong[1], latAndLong[2]] },
+        { ...inputStatus, geo: [latAndLong[1], String(longCurrent)] },
       ]);
     } else {
       alert('Não foi possivel decodificar o link');
@@ -62,6 +63,7 @@ function App() {
 
   return (
     <div className="map">
+      {console.log(newPositions)}
       <input
         type="text"
         placeholder="Latitude"
@@ -129,3 +131,6 @@ function App() {
 }
 
 export default App;
+
+
+// -41.0589677, -41.056779 -0.0021887

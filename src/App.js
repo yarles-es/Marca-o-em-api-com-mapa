@@ -34,7 +34,7 @@ function App() {
     if (!inputStatus.offline && !inputStatus.online)
       return alert("é nescessario que escolha Offline ou Online");
     if (!inputLatLong) return alert("coordenadas não podem ficar vazias");
-    const arrayLongLat = inputLatLong.split(", ");
+    const arrayLongLat = inputLatLong.split(",");
     console.log(arrayLongLat);
     setNewPositions([
       ...newPositions,

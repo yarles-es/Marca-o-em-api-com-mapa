@@ -35,7 +35,8 @@ function App() {
       return alert("é nescessario que escolha Offline ou Online");
     if (!inputLatLong) return alert("coordenadas não podem ficar vazias");
     const arrayLongLat = inputLatLong.split(",");
-    console.log(arrayLongLat);
+    if(arrayLongLat.length !== 2)
+      return alert('Coordenadas digitadas de maneira incorreta');
     setNewPositions([
       ...newPositions,
       { ...inputStatus, geo: [...arrayLongLat] },
